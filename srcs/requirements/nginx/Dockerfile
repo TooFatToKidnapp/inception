@@ -1,21 +1,19 @@
 #nginx configration
 
-FROM debian:10
+FROM debian:buster
+
 RUN apt-get --assume-yes update  && apt-get --assume-yes upgrade
 
 #install nginx and openssl
-RUN apt-get install -y nginx openssl && rm -fr /var/lib/apt/lists/*
-
-# Copy the nginx config file
-COPY nginx.conf /etc/nginx/nginx.conf
-
-RUN sed -i 's/ssl_protocols.*/ssl_protocols TLSv1.2;/' /etc/nginx/nginx.conf
+RUN apt-get install --assume-yes nginx openssl && rm -fr /var/lib/apt/lists/*
 
 # Create the SSL certificates and key
-RUN openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/nginx/server.key -out /etc/nginx/server.crt -days 365 -subj "/C=US/ST=California/L=San Francisco/O=ACME Inc/CN=example.com"
+RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
+/etc/ssl/aabdou.42.fr.pem -keyout /etc/ssl/aabdou.42.fr.key  -subj \
+"/C=MA/ST=Béni Mellal-Khénifra/L=Khouribga/O=42 School/OU=aabdou/CN=aabdou.42.fr"
 
-# run nginx with the given config
-RUN nginx -c /etc/nginx/nginx.conf
+# Copy the nginx config file
+COPY config-files/nginx.conf /etc/nginx/nginx.conf
 
 # docker will listen in port 443
 EXPOSE 443
