@@ -25,7 +25,7 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 COPY config-files/nginx.conf /etc/nginx/nginx.conf
 
 # docker will listen in port 443
-EXPOSE 443
+# EXPOSE 443
 
 # the command tat will run at container startup , daemon off so that nginx wont be running in the backround
 CMD ["nginx", "-g", "daemon off;"]
