@@ -6,12 +6,13 @@ services:
     build: ./requirements/nginx/
     ports:
       - "443:443"
+    restart: unless-stopped
 
   mariadb:
     container_name: mariadb
     image: mariadb
     build: ./requirements/mariadb/
     env_file:
-      - ./.env
-    restart: always
+      - .env
+    restart: unless-stopped
 

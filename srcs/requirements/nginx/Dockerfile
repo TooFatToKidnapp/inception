@@ -30,4 +30,3 @@ COPY config-files/nginx.conf /etc/nginx/nginx.conf
 # the command tat will run at container startup , daemon off so that nginx wont be running in the backround
 CMD ["nginx", "-g", "daemon off;"]
 
-

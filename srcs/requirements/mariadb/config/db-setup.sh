@@ -6,9 +6,13 @@ sed -i '28s/.*/bind-address            = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-
 
 service mysql start
 
-mysql --user=root --execute "CREATE USER 'ali'@'%' IDENTIFIED BY 'password123';"
-mysql --user=root --execute "CREATE DATABASE IF NOT EXISTS data;"
-mysql --user=root --execute "USE data;"
-mysql --user=root --execute "GRANT ALL PRIVILEGES ON * TO 'ali'@'%' WITH GRANT OPTION;"
+mysql --user=root --execute "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};"
+mysql --user=root --execute "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}';"
+mysql --user=root --execute "USE '${MYSQL_DATABASE}'; GRANT ALL PRIVILEGES ON * TO '${MYSQL_USER}'@'%';"
 mysql --user=root --execute "FLUSH PRIVILEGES;"
-mysql --user=root --execute "alter user 'root'@'localhost' identified by 'password123'"
+
+# command is used to replace the current process with a new command
+# mysqld_safe is the recommended way to start mysqld server, the command \
+# adds some safty features such as restarting the server when an error occurs \
+# and logging runtime information to an error log
+mysqld_safe
