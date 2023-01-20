@@ -4,24 +4,15 @@ FROM debian:buster
 
 RUN apt-get --assume-yes update && apt-get --assume-yes upgrade ; \
 apt-get --assume-yes install mariadb-server
-# mkdir -p /var/run/mysqld ; \
-# chown -R mysql:mysql /var/run/mysqld ; \
-# chmod 777 /var/run/mysqld
 
-# EXPOSE 6000
+COPY ./config/db-setup.sh .
 
-CMD ["mysqld"]
-# CMD ["mysqld", "--bind-address=0.0.0.0"]
+RUN chmod +x db-setup.sh
+RUN bash db-setup.sh
 
-# start mysql
-# 
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+
+# command is used to replace the current process with a new command
+# mysqld_safe is the recommended way to start mysqld server, the command \
+# adds some safty features such as restarting the server when an error occurs \
+# and logging runtime information to an error log
+CMD exec mysqld_safe

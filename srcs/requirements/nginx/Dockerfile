@@ -19,7 +19,7 @@ RUN apt-get install --assume-yes nginx openssl && rm -fr /var/lib/apt/lists/*
 # -subj: specifies the subject of the certificate , CN = commen name (the domain name)
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 /etc/ssl/aabdou.42.fr.pem -keyout /etc/ssl/aabdou.42.fr.key  -subj \
-"/C=MA/ST=Béni Mellal-Khénifra/L=Khouribga/O=42 School/OU=aabdou/CN=aabdou.42.fr"
+"/C=MA/ST=Béni Mellal-Khénifra/L=Khouribga/O=1337 School/OU=aabdou/CN=aabdou.42.fr"
 
 # Copy the nginx config file
 COPY config-files/nginx.conf /etc/nginx/nginx.conf
