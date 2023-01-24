@@ -16,3 +16,10 @@ services:
       - .env
     restart: unless-stopped
 
+  wordpress:
+    container_name: wordpress
+    image: wordpress
+    build: ./requirements/wordpress/
+    env_file:
+      - .env
+    restart: unless-stopped
