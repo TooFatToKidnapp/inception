@@ -1,12 +1,5 @@
 version: "3.7"
 services:
-  nginx:
-    container_name: nginx
-    image: nginx
-    build: ./requirements/nginx/
-    ports:
-      - "443:443"
-    restart: unless-stopped
 
   mariadb:
     container_name: mariadb
@@ -14,6 +7,8 @@ services:
     build: ./requirements/mariadb/
     env_file:
       - .env
+    volumes:
+      - mariadb_volume:/data
     restart: unless-stopped
 
   wordpress:
@@ -22,4 +17,31 @@ services:
     build: ./requirements/wordpress/
     env_file:
       - .env
+    volumes:
+      - wordpress_volume:/data
     restart: unless-stopped
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    build: ./requirements/nginx/
+    ports:
+      - "443:443"
+    restart: unless-stopped
+
+
+volumes:
+  wordpress_volume:
+    name: wordpress_volume
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/aabdou/data
+  mariadb_volume:
+    name: mariadb_volume
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/aabdou/data

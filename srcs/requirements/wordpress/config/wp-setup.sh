@@ -16,7 +16,7 @@ mv wp-cli.phar /usr/local/bin/wp
 # link env variables with wp !!!
 
 # check if the dir "/var/www/http/wp" dose not existes alredy
-if [ ! -d "/var/www/http/wp"];
+if [ ! -d "/var/www/http/wp" ];
 then
 
 	mkdir -p /var/www/http/wp
@@ -28,7 +28,4 @@ then
 	# add input from .env file
 	wp create config --dbname=USER_DATA --dbuser=ali --dbpass=Password123 --dbhost=localhost --path=/var/www/http/wp --allow-root
 
-
-
 fi
-
