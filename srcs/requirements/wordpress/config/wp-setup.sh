@@ -6,14 +6,26 @@ chmod +x wp-cli.phar
 
 mv wp-cli.phar /usr/local/bin/wp
 
+### for testing remove later
 
+apt-get --assume-yes install mariadb-server
+
+sed -i '19s/.*/port                    = 3306/' /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i '28s/.*/bind-address            = 0.0.0.0/' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+service mysql start
+
+mysql --user=root --execute "CREATE DATABASE IF NOT EXISTS USER_DATA;"
+mysql --user=root --execute "CREATE USER 'ali'@'%' IDENTIFIED BY 'Password123';"
+mysql --user=root --execute "USE 'USER_DATA'; GRANT ALL PRIVILEGES ON * TO 'ali'@'%';"
+mysql --user=root --execute "FLUSH PRIVILEGES;"
+
+
+
+####
 
 #### Todo:
-# need to creat volumes for wp and mariadb
-# link them together via docker-compose file
-# mariadb must start first
 # finish wp config
-# link env variables with wp !!!
 
 # check if the dir "/var/www/http/wp" dose not existes alredy
 if [ ! -d "/var/www/http/wp" ];
@@ -21,11 +33,19 @@ then
 
 	mkdir -p /var/www/http/wp
 
+	cd /var/www/http/wp
+
 	wp --allow-root core download --path=/var/www/http/wp
 
-	mv wp-config-sample.php wp-config.php
+	#mv wp-config-sample.php wp-config.php
 
 	# add input from .env file
-	wp create config --dbname=USER_DATA --dbuser=ali --dbpass=Password123 --dbhost=localhost --path=/var/www/http/wp --allow-root
+	wp config create  --dbname=USER_DATA --dbuser=ali --dbpass=Password123 --dbhost=mariadb --path=/var/www/http/wp --allow-root
+	#wp create config --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=${WORDPRESS_HOST_NAME} --path=/var/www/http/wp --allow-root
+
+	wp core install --path=/var/www/http/wp --url=localhost --title=inception --admin_user=ADMIN --admin_password=Password123 --admin_email=admin@mail.com --skip-email --allow-root
+
+	wp user create ali abdouali422@gmail.com --user_pass=Password123 --path=/var/www/http/wp --allow-root
 
 fi
+
