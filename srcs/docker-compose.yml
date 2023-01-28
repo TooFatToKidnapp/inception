@@ -7,26 +7,41 @@ services:
     build: ./requirements/mariadb/
     env_file:
       - .env
+    ports:
+      - 127.0.0.1:3306:3306
     volumes:
       - mariadb_volume:/data
     restart: unless-stopped
+    networks:
+      - wp
 
   wordpress:
+    depends_on:
+      - mariadb
     container_name: wordpress
     image: wordpress
+    ports:
+      - 127.0.0.1:9000:9000
     build: ./requirements/wordpress/
     env_file:
       - .env
     volumes:
       - wordpress_volume:/data
+    networks:
+      - nginx
+      - wp
     restart: unless-stopped
 
   nginx:
+    depends_on:
+      - wordpress
     container_name: nginx
     image: nginx
     build: ./requirements/nginx/
     ports:
       - "443:443"
+    networks:
+      - nginx
     restart: unless-stopped
 
 
@@ -45,3 +60,8 @@ volumes:
       type: none
       o: bind
       device: /Users/aabdou/data
+
+
+networks:
+  nginx:
+  wp:

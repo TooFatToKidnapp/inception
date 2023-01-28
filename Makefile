@@ -1,8 +1,8 @@
 all : run
 
 run :
-	@mkdir -p ~/data/mariadb_volume
-	@mkdir ~/data/wordpress_volume
+	@-mkdir -p ~/data/mariadb_volume
+	@-mkdir ~/data/wordpress_volume
 	@docker-compose -f ./srcs/docker-compose.yml up --build
 
 
