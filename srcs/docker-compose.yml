@@ -8,12 +8,12 @@ services:
     env_file:
       - .env
     ports:
-      - 127.0.0.1:3306:3306
+      - "3306:3306"
     volumes:
       - mariadb_volume:/data
     restart: unless-stopped
     networks:
-      - wp
+      - inception
 
   wordpress:
     depends_on:
@@ -21,15 +21,14 @@ services:
     container_name: wordpress
     image: wordpress
     ports:
-      - 127.0.0.1:9000:9000
+      - "9000:9000"
     build: ./requirements/wordpress/
     env_file:
       - .env
     volumes:
       - wordpress_volume:/data
     networks:
-      - nginx
-      - wp
+      - inception
     restart: unless-stopped
 
   nginx:
@@ -41,7 +40,7 @@ services:
     ports:
       - "443:443"
     networks:
-      - nginx
+      - inception
     restart: unless-stopped
 
 
@@ -63,5 +62,5 @@ volumes:
 
 
 networks:
-  nginx:
-  wp:
+  inception:
+    driver: bridge
