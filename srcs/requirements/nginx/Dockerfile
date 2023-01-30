@@ -20,7 +20,7 @@ RUN apt-get install --assume-yes nginx openssl && rm -fr /var/lib/apt/lists/*
 RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 /etc/ssl/aabdou.42.fr.pem -keyout /etc/ssl/aabdou.42.fr.key  -subj \
 "/C=MA/ST=Béni Mellal-Khénifra/L=Khouribga/O=1337 School/OU=aabdou/CN=aabdou.42.fr"
-
+RUN mkdir -p /var/www/http/wp
 # Copy the nginx config file
 COPY config-files/nginx.conf /etc/nginx/nginx.conf
 
