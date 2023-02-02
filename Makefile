@@ -10,8 +10,8 @@ clean:
 	@docker-compose -f ./srcs/docker-compose.yml down --remove-orphans
 
 fclean: clean
-	@rm -fr ~/data/wordpress_volume
-	@rm -fr ~/data/mariadb_volume
+	@rm -fr ~/data
+	@-docker volume rm $$(docker volume ls -q)
 
 re: fclean all
 

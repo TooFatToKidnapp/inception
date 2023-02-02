@@ -8,5 +8,5 @@ RUN apt-get --assume-yes install curl php7.3-fpm less php-mysql mariadb-client
 
 COPY ./config/wp-setup.sh .
 RUN chmod +x wp-setup.sh
-
+RUN service php7.3-fpm start
 CMD ["bash", "wp-setup.sh"]
