@@ -27,6 +27,14 @@ services:
       - inception
     restart: unless-stopped
 
+  redis:
+    container_name: redis
+    image: redis
+    build: ./requirements/bonus/redis
+    networks:
+      - inception
+    restart: unless-stopped
+
   wordpress:
     depends_on:
       - mariadb

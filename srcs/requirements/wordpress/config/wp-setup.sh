@@ -12,14 +12,10 @@ mkdir -p /run/php
 
 cd /var/www/http/wp
 
-# rm -rf *
-
 wp --allow-root core download --path=/var/www/http/wp
 
 sleep 5;
 
-# add input from .env file
-# wp config create  --dbname=USER_DATA --dbuser=aabdou --dbpass=password123 --dbhost=mariadb --allow-root
 wp config create  --dbname=${MYSQL_DATABASE} --dbuser=${MYSQL_USER} --dbpass=${MYSQL_PASSWORD} --dbhost=mariadb --path=/var/www/http/wp --allow-root
 
 sleep 3;

@@ -24,9 +24,6 @@ RUN mkdir -p /var/www/http/wp
 # Copy the nginx config file
 COPY config-files/nginx.conf /etc/nginx/nginx.conf
 
-# docker will listen in port 443
-# EXPOSE 443
-
 # the command tat will run at container startup , daemon off so that nginx wont be running in the backround
 CMD ["nginx", "-g", "daemon off;"]
 
