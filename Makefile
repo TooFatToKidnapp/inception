@@ -12,6 +12,7 @@ clean:
 fclean: clean
 	@rm -fr ~/data
 	@-docker volume rm $$(docker volume ls -q)
+#	docker-compose down -v
 
 re: fclean all
 
