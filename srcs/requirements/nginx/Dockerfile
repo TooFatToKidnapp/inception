@@ -22,7 +22,7 @@ RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes -out \
 "/C=MA/ST=Béni Mellal-Khénifra/L=Khouribga/O=1337 School/OU=aabdou/CN=aabdou.42.fr"
 RUN mkdir -p /var/www/http/wp
 # Copy the nginx config file
-COPY config-files/nginx.conf /etc/nginx/nginx.conf
+COPY config/nginx.conf /etc/nginx/nginx.conf
 
 # the command tat will run at container startup , daemon off so that nginx wont be running in the backround
 CMD ["nginx", "-g", "daemon off;"]
