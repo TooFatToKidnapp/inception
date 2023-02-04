@@ -1,64 +1,79 @@
 version: "3.7"
 services:
 
-  mariadb:
-    container_name: mariadb
-    image: mariadb
-    build: ./requirements/mariadb/
+  # mariadb:
+  #   container_name: mariadb
+  #   image: mariadb
+  #   build: ./requirements/mariadb/
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - mariadb_volume:/var/lib/mysql/
+  #   restart: unless-stopped
+  #   networks:
+  #     - inception
+
+  # nginx:
+  #   depends_on:
+  #     - wordpress
+  #   container_name: nginx
+  #   image: nginx
+  #   build: ./requirements/nginx/
+  #   volumes:
+  #     - wordpress_volume:/var/www/http/wp
+  #   ports:
+  #     - "443:443"
+  #   networks:
+  #     - inception
+  #   restart: unless-stopped
+
+  # redis:
+  #   container_name: redis
+  #   image: redis
+  #   build: ./requirements/bonus/redis
+  #   networks:
+  #     - inception
+  #   restart: unless-stopped
+
+  # wordpress:
+  #   depends_on:
+  #     - mariadb
+  #   container_name: wordpress
+  #   image: wordpress
+  #   build: ./requirements/wordpress/
+  #   env_file:
+  #     - .env
+  #   volumes:
+  #     - wordpress_volume:/var/www/http/wp
+  #   networks:
+  #     - inception
+  #   restart: unless-stopped
+
+  # adminer:
+  #   depends_on:
+  #     - mariadb
+  #   container_name: adminer
+  #   image: adminer
+  #   ports:
+  #     -  "8080:8080"
+  #   build: ./requirements/bonus/Adminer/
+  #   networks:
+  #     - inception
+  #   restart: unless-stopped
+
+  ftp:
+    container_name: ftp
+    image: ftp
+    build: ./requirements/bonus/ftp/
+    ports:
+      - "2000-2005:2000-2005"
+      - "20-21:20-21"
     env_file:
       - .env
-    volumes:
-      - mariadb_volume:/var/lib/mysql/
-    restart: unless-stopped
     networks:
       - inception
-
-  nginx:
-    depends_on:
-      - wordpress
-    container_name: nginx
-    image: nginx
-    build: ./requirements/nginx/
     volumes:
       - wordpress_volume:/var/www/http/wp
-    ports:
-      - "443:443"
-    networks:
-      - inception
-    restart: unless-stopped
-
-  redis:
-    container_name: redis
-    image: redis
-    build: ./requirements/bonus/redis
-    networks:
-      - inception
-    restart: unless-stopped
-
-  wordpress:
-    depends_on:
-      - mariadb
-    container_name: wordpress
-    image: wordpress
-    build: ./requirements/wordpress/
-    env_file:
-      - .env
-    volumes:
-      - wordpress_volume:/var/www/http/wp
-    networks:
-      - inception
-    restart: unless-stopped
-
-  adminer:
-    depends_on:
-      - mariadb
-    container_name: adminer
-    image: adminer
-    ports:
-      -  "8080:8080"
-    build: ./requirements/bonus/Adminer/
-    networks:
-      - inception
     restart: unless-stopped
 
 volumes:
