@@ -1,31 +1,31 @@
 version: "3.7"
 services:
 
-  # mariadb:
-  #   container_name: mariadb
-  #   image: mariadb
-  #   build: ./requirements/mariadb/
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - mariadb_volume:/var/lib/mysql/
-  #   restart: unless-stopped
-  #   networks:
-  #     - inception
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    build: ./requirements/mariadb/
+    env_file:
+      - .env
+    volumes:
+      - mariadb_volume:/var/lib/mysql/
+    restart: unless-stopped
+    networks:
+      - inception
 
-  # nginx:
-  #   depends_on:
-  #     - wordpress
-  #   container_name: nginx
-  #   image: nginx
-  #   build: ./requirements/nginx/
-  #   volumes:
-  #     - wordpress_volume:/var/www/http/wp
-  #   ports:
-  #     - "443:443"
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  nginx:
+    depends_on:
+      - wordpress
+    container_name: nginx
+    image: nginx
+    build: ./requirements/nginx/
+    volumes:
+      - wordpress_volume:/var/www/http/wp
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    restart: unless-stopped
 
   # redis:
   #   container_name: redis
@@ -35,19 +35,19 @@ services:
   #     - inception
   #   restart: unless-stopped
 
-  # wordpress:
-  #   depends_on:
-  #     - mariadb
-  #   container_name: wordpress
-  #   image: wordpress
-  #   build: ./requirements/wordpress/
-  #   env_file:
-  #     - .env
-  #   volumes:
-  #     - wordpress_volume:/var/www/http/wp
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  wordpress:
+    depends_on:
+      - mariadb
+    container_name: wordpress
+    image: wordpress
+    build: ./requirements/wordpress/
+    env_file:
+      - .env
+    volumes:
+      - wordpress_volume:/var/www/http/wp
+    networks:
+      - inception
+    restart: unless-stopped
 
   # adminer:
   #   depends_on:
@@ -62,6 +62,8 @@ services:
   #   restart: unless-stopped
 
   ftp:
+    depends_on:
+      - wordpress
     container_name: ftp
     image: ftp
     build: ./requirements/bonus/ftp/
@@ -73,7 +75,7 @@ services:
     networks:
       - inception
     volumes:
-      - wordpress_volume:/var/www/http/wp
+      - wordpress_volume:/home/aabdou
     restart: unless-stopped
 
 volumes:
