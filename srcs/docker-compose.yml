@@ -27,13 +27,13 @@ services:
       - inception
     restart: unless-stopped
 
-  # redis:
-  #   container_name: redis
-  #   image: redis
-  #   build: ./requirements/bonus/redis
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  redis:
+    container_name: redis
+    image: redis
+    build: ./requirements/bonus/redis
+    networks:
+      - inception
+    restart: unless-stopped
 
   wordpress:
     depends_on:
@@ -49,17 +49,17 @@ services:
       - inception
     restart: unless-stopped
 
-  # adminer:
-  #   depends_on:
-  #     - mariadb
-  #   container_name: adminer
-  #   image: adminer
-  #   ports:
-  #     -  "8080:8080"
-  #   build: ./requirements/bonus/Adminer/
-  #   networks:
-  #     - inception
-  #   restart: unless-stopped
+  adminer:
+    depends_on:
+      - mariadb
+    container_name: adminer
+    image: adminer
+    ports:
+      -  "8080:8080"
+    build: ./requirements/bonus/Adminer/
+    networks:
+      - inception
+    restart: unless-stopped
 
   ftp:
     depends_on:
