@@ -93,6 +93,16 @@ services:
       - /var/run:/var/run:rw
     restart: unless-stopped
 
+  static_website:
+    container_name: static_website
+    image: static_website
+    build: ./requirements/bonus/static_website/
+    ports:
+      - "1234:1234"
+    networks:
+      - inception
+    restart: unless-stopped
+
 volumes:
   wordpress_volume:
     name: wordpress_volume
